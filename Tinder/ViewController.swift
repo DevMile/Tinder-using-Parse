@@ -7,13 +7,25 @@
 //
 
 import UIKit
+import Parse
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let newUser = PFObject(className: "Testing")
+        newUser["name"] = "Mile"
+        newUser.saveInBackground { (success, error) in
+            if success {
+            print("New User Saved!")
+            } else {
+                print(error?.localizedDescription as Any)
+            }
+        }
     }
+    
+    
 
 
 }

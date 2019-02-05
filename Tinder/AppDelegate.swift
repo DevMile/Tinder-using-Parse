@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let configuration = ParseClientConfiguration { (parseConfig) in
+            parseConfig.applicationId = "tinderAppId"
+            parseConfig.server = "http://tindserver.herokuapp.com/parse"
+            parseConfig.clientKey = "9E0AKSkrFbj^#4l]gM_za[n?^m1$}s"
+        }
+        Parse.initialize(with: configuration)
         return true
+        
+    
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
