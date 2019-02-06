@@ -14,6 +14,7 @@ class UpdateUserVC: UIViewController, UINavigationControllerDelegate, UIImagePic
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var genderSwitch: UISwitch!
     @IBOutlet weak var interestedIn: UISwitch!
+    let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +51,7 @@ class UpdateUserVC: UIViewController, UINavigationControllerDelegate, UIImagePic
     }
     
     @IBAction func updateUser(_ sender: Any) {
+        self.showActivityIndicator()
         PFUser.current()?["isWoman"] = genderSwitch.isOn
         PFUser.current()?["interestedInWomen"] = interestedIn.isOn
         if let image = profileImage.image {
@@ -57,13 +59,37 @@ class UpdateUserVC: UIViewController, UINavigationControllerDelegate, UIImagePic
                 PFUser.current()?["photo"] = PFFile(name: "userPhoto.png", data: imageData)
                 PFUser.current()?.saveInBackground(block: { (success, error) in
                     if success {
-                        print("Success, user updated!")
+                        self.stopActivityIndicator()
+                        self.displayAlert(title: "Success!", message: "User updated.")
                     } else {
-                        print(error?.localizedDescription as Any)
+                        self.stopActivityIndicator()
+                        self.displayAlert(title: "Error", message: error?.localizedDescription ?? "Unknown error, please try again.")
                     }
                 })
             }
         }
+    }
+    
+    func displayAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // Activity Indicator
+    func showActivityIndicator() {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+    }
+    
+    func stopActivityIndicator() {
+        self.activityIndicator.stopAnimating()
+        UIApplication.shared.endIgnoringInteractionEvents()
     }
     
     
