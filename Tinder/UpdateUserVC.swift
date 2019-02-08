@@ -18,7 +18,7 @@ class UpdateUserVC: UIViewController, UINavigationControllerDelegate, UIImagePic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Show current user data
+        // Show current user data when logged in
         if let isWoman = PFUser.current()?["isWoman"] as? Bool {
             genderSwitch.setOn(isWoman, animated: false)
         }
@@ -59,8 +59,14 @@ class UpdateUserVC: UIViewController, UINavigationControllerDelegate, UIImagePic
                 PFUser.current()?["photo"] = PFFile(name: "userPhoto.png", data: imageData)
                 PFUser.current()?.saveInBackground(block: { (success, error) in
                     if success {
+                        // Redirect user after updating information
                         self.stopActivityIndicator()
-                        self.displayAlert(title: "Success!", message: "User updated.")
+                        let alert = UIAlertController(title: "Success!", message: "User updated.", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                            self.performSegue(withIdentifier: "showSwipeVC", sender: nil)
+                        })
+                        alert.addAction(action)
+                        self.present(alert, animated: true, completion: nil)
                     } else {
                         self.stopActivityIndicator()
                         self.displayAlert(title: "Error", message: error?.localizedDescription ?? "Unknown error, please try again.")

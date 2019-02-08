@@ -94,11 +94,12 @@
                         <outlet property="signupButton" destination="PAF-VX-Qgd" id="vKS-LW-4Aw"/>
                         <outlet property="usernameField" destination="k3l-Uq-knC" id="Hcv-IO-fAu"/>
                         <segue destination="vzr-RM-nuX" kind="presentation" identifier="showUpdateUser" id="cBA-Zr-pNQ"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="fromLoginToSwipeVC" id="2xX-UJ-Wdo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJR-nW-gSH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-804" y="135"/>
+            <point key="canvasLocation" x="-809" y="134"/>
         </scene>
         <!--Update UserVC-->
         <scene sceneID="LH9-4D-8aO">
@@ -204,49 +205,66 @@
                         <outlet property="genderSwitch" destination="6g9-tO-ant" id="4i9-xU-bdf"/>
                         <outlet property="interestedIn" destination="UoZ-mv-z1A" id="BZy-ah-8Df"/>
                         <outlet property="profileImage" destination="2YQ-z4-1CZ" id="yLT-z4-yVz"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="showSwipeVC" id="Ycp-xW-Xcv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t1I-F0-DS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4" y="134"/>
+            <point key="canvasLocation" x="57" y="679"/>
         </scene>
-        <!--View Controller-->
+        <!--SwipeVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Tinder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SwipeVC" customModule="Tinder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SWIPE ME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8K-nZ-MMN">
-                                <rect key="frame" x="37.5" y="183.5" width="300" height="300"/>
-                                <color key="backgroundColor" red="0.66739394060000001" green="0.63503329799999997" blue="0.85282811410000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wcU-Q5-v51">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <items>
+                                    <navigationItem id="ezU-dZ-eob">
+                                        <barButtonItem key="leftBarButtonItem" title="Logout" id="rPV-mv-5hk">
+                                            <connections>
+                                                <action selector="logoutButtonPressed:" destination="BYZ-38-t0r" id="4fS-Vp-vdW"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="Aay-rN-ahB">
+                                <rect key="frame" x="50" y="196" width="275" height="275"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="Kym-FH-9nm"/>
-                                    <constraint firstAttribute="height" constant="300" id="lip-oJ-60M"/>
+                                    <constraint firstAttribute="width" secondItem="Aay-rN-ahB" secondAttribute="height" multiplier="1:1" id="HvN-qH-YGq"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="K8K-nZ-MMN" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="RJF-C8-wDe"/>
-                            <constraint firstItem="K8K-nZ-MMN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kad-ci-8Oc"/>
+                            <constraint firstItem="wcU-Q5-v51" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="0dP-99-bIe"/>
+                            <constraint firstItem="wcU-Q5-v51" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="1Uc-R0-kff"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Aay-rN-ahB" secondAttribute="trailing" constant="50" id="6Qu-BL-WUf"/>
+                            <constraint firstItem="Aay-rN-ahB" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="8xj-g7-uFJ"/>
+                            <constraint firstItem="Aay-rN-ahB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Dvt-pg-rKZ"/>
+                            <constraint firstItem="Aay-rN-ahB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="lma-B4-z2u"/>
+                            <constraint firstItem="wcU-Q5-v51" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="mLs-ml-Npc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="swipeLabel" destination="K8K-nZ-MMN" id="JPp-ZO-n4F"/>
+                        <outlet property="userImage" destination="Aay-rN-ahB" id="rLj-SY-iSX"/>
+                        <segue destination="e3m-cT-foE" kind="presentation" identifier="logoutToLoginVC" id="4TQ-na-PRs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2143" y="134"/>
+            <point key="canvasLocation" x="1074" y="155"/>
         </scene>
     </scenes>
     <resources>
         <image name="user" width="409.60000610351562" height="409.60000610351562"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ycp-xW-Xcv"/>
+    </inferredMetricsTieBreakers>
 </document>

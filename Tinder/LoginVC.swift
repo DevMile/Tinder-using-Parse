@@ -26,7 +26,11 @@ class LoginVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         // If user exist redirect to next screen
         if PFUser.current() != nil {
-            performSegue(withIdentifier: "showUpdateUser", sender: nil)
+            if PFUser.current()?["isWoman"] != nil {
+            performSegue(withIdentifier: "fromLoginToSwipeVC", sender: nil)
+            } else {
+                performSegue(withIdentifier: "showUpdateUser", sender: nil)
+            }
         }
     }
     
@@ -42,7 +46,11 @@ class LoginVC: UIViewController {
                         self.displayAlert(title: "Error", message: error?.localizedDescription ?? "Unknown error. Please try again.")
                     } else {
                         //Redirect user after login
-                        self.performSegue(withIdentifier: "showUpdateUser", sender: nil)
+                        if user?["isWoman"] != nil {
+                            self.performSegue(withIdentifier: "fromLoginToSwipeVC", sender: nil)
+                        } else {
+                            self.performSegue(withIdentifier: "showUpdateUser", sender: nil)
+                        }
                     }
                 }
             } else {
