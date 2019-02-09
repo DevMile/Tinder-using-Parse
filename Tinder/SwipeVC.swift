@@ -16,12 +16,15 @@ class SwipeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         updateImage()
-        
         let swipeGesture = UIPanGestureRecognizer(target: self, action: #selector(swipeMe(gestureRecognizer:)))
         userImage.addGestureRecognizer(swipeGesture)
-        
+        // Get the location from the user and store it
+        PFGeoPoint.geoPointForCurrentLocation { (geoPoint, error) in
+            if let point = geoPoint {
+                PFUser.current()?["location"] = point
+                PFUser.current()?.saveInBackground()            }
+        }
     }
     
     @objc func swipeMe(gestureRecognizer: UIPanGestureRecognizer) {
@@ -75,7 +78,10 @@ class SwipeVC: UIViewController {
                 alreadySwipedUsers += rejectedUsers
             }
             query.whereKey("objectId", notContainedIn: alreadySwipedUsers)
-            query.limit = 1
+            // Select people from nearby location
+            if let geoPoint = PFUser.current()?["location"] as? PFGeoPoint {
+            query.whereKey("location", withinGeoBoxFromSouthwest: PFGeoPoint(latitude: geoPoint.latitude - 1, longitude: geoPoint.longitude - 1), toNortheast: PFGeoPoint(latitude: geoPoint.latitude + 1, longitude: geoPoint.longitude + 1))
+            }
             // Download selected users
             query.findObjectsInBackground { (objects, error) in
                 if error != nil {
@@ -103,6 +109,13 @@ class SwipeVC: UIViewController {
                                 }
                             }
                         }
+                        // Show pop-up if there are no more matches
+                        if users.count == 0 {
+                            let alert = UIAlertController(title: "Sorry!", message: "No more matches in your area", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(action)
+                            self.present(alert, animated: true, completion: nil)
+                        }
                     }
                 }
             }
@@ -114,8 +127,6 @@ class SwipeVC: UIViewController {
         PFUser.logOut()
         performSegue(withIdentifier: "logoutToLoginVC", sender: nil)
     }
-    
-    
     
     
 }
