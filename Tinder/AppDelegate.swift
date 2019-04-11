@@ -19,9 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let configuration = ParseClientConfiguration { (parseConfig) in
-            parseConfig.applicationId = "tinderAppId"
-            parseConfig.server = "http://tindserver.herokuapp.com/parse"
-            parseConfig.clientKey = "9E0AKSkrFbj^#4l]gM_za[n?^m1$}s"
+            parseConfig.applicationId = "ENTER YOUR ID"
+            parseConfig.server = "ENTER YOUR URL TO SERVER"
+            parseConfig.clientKey = "ENTER YOUR KEY"
         }
         Parse.initialize(with: configuration)
         return true
